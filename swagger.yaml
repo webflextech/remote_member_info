@@ -125,7 +125,7 @@ definitions:
         enum:
           - points
           - currency
-        description: Type of account
+        description: Type of account can only be 1 of `points` or `currency`
   Group:
     required:
     - "id"
