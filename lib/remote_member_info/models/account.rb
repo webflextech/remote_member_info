@@ -23,7 +23,7 @@ module RemoteMemberInfo
     # current value of this points balance account
     attr_accessor :value
 
-    # Type of account
+    # Type of account can only be 1 of `points` or `currency`
     attr_accessor :type
 
     class EnumAttributeValidator
