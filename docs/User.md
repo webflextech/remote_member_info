@@ -15,5 +15,6 @@ Name | Type | Description | Notes
 **gender** | **String** |  | [optional] 
 **email** | **String** |  | [optional] 
 **groups** | [**Array&lt;Group&gt;**](Group.md) |  | [optional] 
+**accounts** | [**Array&lt;Account&gt;**](Account.md) |  | [optional] 
 
 

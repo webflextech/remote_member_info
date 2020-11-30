@@ -13,24 +13,58 @@ Swagger Codegen version: 2.4.5
 require 'date'
 
 module RemoteMemberInfo
-  class ErrorModel
-    attr_accessor :code
+  class Account
+    # id of points balance account, could possible be a currency AUD for example if type currency
+    attr_accessor :id
 
-    attr_accessor :message
+    # description for this points balance account
+    attr_accessor :name
+
+    # current value of this points balance account
+    attr_accessor :value
+
+    # Type of account
+    attr_accessor :type
+
+    class EnumAttributeValidator
+      attr_reader :datatype
+      attr_reader :allowable_values
+
+      def initialize(datatype, allowable_values)
+        @allowable_values = allowable_values.map do |value|
+          case datatype.to_s
+          when /Integer/i
+            value.to_i
+          when /Float/i
+            value.to_f
+          else
+            value
+          end
+        end
+      end
+
+      def valid?(value)
+        !value || allowable_values.include?(value)
+      end
+    end
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'code' => :'code',
-        :'message' => :'message'
+        :'id' => :'id',
+        :'name' => :'name',
+        :'value' => :'value',
+        :'type' => :'type'
       }
     end
 
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'code' => :'Integer',
-        :'message' => :'String'
+        :'id' => :'String',
+        :'name' => :'String',
+        :'value' => :'Float',
+        :'type' => :'String'
       }
     end
 
@@ -42,12 +76,20 @@ module RemoteMemberInfo
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
 
-      if attributes.has_key?(:'code')
-        self.code = attributes[:'code']
+      if attributes.has_key?(:'id')
+        self.id = attributes[:'id']
       end
 
-      if attributes.has_key?(:'message')
-        self.message = attributes[:'message']
+      if attributes.has_key?(:'name')
+        self.name = attributes[:'name']
+      end
+
+      if attributes.has_key?(:'value')
+        self.value = attributes[:'value']
+      end
+
+      if attributes.has_key?(:'type')
+        self.type = attributes[:'type']
       end
     end
 
@@ -55,12 +97,16 @@ module RemoteMemberInfo
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
-      if @code.nil?
-        invalid_properties.push('invalid value for "code", code cannot be nil.')
+      if @id.nil?
+        invalid_properties.push('invalid value for "id", id cannot be nil.')
       end
 
-      if @message.nil?
-        invalid_properties.push('invalid value for "message", message cannot be nil.')
+      if @value.nil?
+        invalid_properties.push('invalid value for "value", value cannot be nil.')
+      end
+
+      if @type.nil?
+        invalid_properties.push('invalid value for "type", type cannot be nil.')
       end
 
       invalid_properties
@@ -69,9 +115,22 @@ module RemoteMemberInfo
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      return false if @code.nil?
-      return false if @message.nil?
+      return false if @id.nil?
+      return false if @value.nil?
+      return false if @type.nil?
+      type_validator = EnumAttributeValidator.new('String', ['points', 'currency'])
+      return false unless type_validator.valid?(@type)
       true
+    end
+
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] type Object to be assigned
+    def type=(type)
+      validator = EnumAttributeValidator.new('String', ['points', 'currency'])
+      unless validator.valid?(type)
+        fail ArgumentError, 'invalid value for "type", must be one of #{validator.allowable_values}.'
+      end
+      @type = type
     end
 
     # Checks equality by comparing each attribute.
@@ -79,8 +138,10 @@ module RemoteMemberInfo
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          code == o.code &&
-          message == o.message
+          id == o.id &&
+          name == o.name &&
+          value == o.value &&
+          type == o.type
     end
 
     # @see the `==` method
@@ -92,7 +153,7 @@ module RemoteMemberInfo
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [code, message].hash
+      [id, name, value, type].hash
     end
 
     # Builds the object from hash
