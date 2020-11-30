@@ -2,7 +2,7 @@
 swagger: "2.0"
 info:
   description: "The API to interface with the db"
-  version: "1.0.1"
+  version: "1.0.2"
   title: "remote_member_info"
 host: "localhost"
 basePath: "/"
@@ -84,6 +84,10 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/Group"
+      accounts:
+        type: "array"
+        items:
+          $ref: "#/definitions/Account"
     example:
       code: "code"
       gender: "gender"
@@ -101,6 +105,27 @@ definitions:
       id: 0
       first_name: "first_name"
       email: "email"
+  Account:
+    required:
+      - "id"
+      - "value"
+      - "type"
+    properties: 
+      id:
+        type: string
+        description: id of points balance account, could possible be a currency AUD for example if type currency
+      name:
+        type: string
+        description: description for this points balance account
+      value:
+        type: number
+        description: current value of this points balance account
+      type:
+        type: string
+        enum:
+          - points
+          - currency
+        description: Type of account
   Group:
     required:
     - "id"
