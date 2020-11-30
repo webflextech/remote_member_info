@@ -1,0 +1,9 @@
+{
+    "gemName": "remote_member_info",
+    "moduleName": "RemoteMemberInfo",
+    "gemHomepage": "http://www.webflex.com.au/",
+    "gemSummary": "This is a ruby wrapper for the swagger generated api installed within a clients premesis",
+    "gemDescription": "This gem maps to the user info api installed inside a premisis, This is a generic api",
+    "gemAuthor": "Jeffrey Borg",
+    "gemAuthorEmail": "jeffrey@webflex.com.au"
+}

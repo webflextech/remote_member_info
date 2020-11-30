@@ -1,0 +1,126 @@
+---
+swagger: "2.0"
+info:
+  description: "The API to interface with the db"
+  version: "1.0.1"
+  title: "remote_member_info"
+host: "localhost"
+basePath: "/"
+schemes:
+- "http"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+paths:
+  /members/{id}:
+    get:
+      tags:
+      - "Member"
+      summary: "Gets a member by id"
+      operationId: "Member_Get"
+      consumes: []
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "validtion the request failed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        404:
+          description: "The member was not found"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+      x-swagger-router-controller: "Member"
+definitions:
+  User:
+    required:
+    - "active"
+    - "date_of_birth"
+    - "id"
+    properties:
+      id:
+        type: "integer"
+        format: "string"
+        description: "Members ID unique id"
+      code:
+        type: "string"
+      date_of_birth:
+        type: "string"
+        format: "date-time"
+        description: "Members date of birth"
+      active:
+        type: "boolean"
+        description: "Is the user active?"
+      join_date:
+        type: "string"
+        format: "date-time"
+        description: "Members join date"
+      expiry_date:
+        type: "string"
+        format: "date-time"
+        description: "Members valid to date"
+      stripe_data:
+        type: "string"
+        description: "Mag stripe data"
+      first_name:
+        type: "string"
+      last_name:
+        type: "string"
+      gender:
+        type: "string"
+      email:
+        type: "string"
+      groups:
+        type: "array"
+        items:
+          $ref: "#/definitions/Group"
+    example:
+      code: "code"
+      gender: "gender"
+      date_of_birth: "2000-01-23T04:56:07.000+00:00"
+      join_date: "2000-01-23T04:56:07.000+00:00"
+      expiry_date: "2000-01-23T04:56:07.000+00:00"
+      active: true
+      stripe_data: "stripe_data"
+      last_name: "last_name"
+      groups:
+      - name: "name"
+        id: "id"
+      - name: "name"
+        id: "id"
+      id: 0
+      first_name: "first_name"
+      email: "email"
+  Group:
+    required:
+    - "id"
+    properties:
+      id:
+        type: "string"
+        description: "This is used to key the value"
+      name:
+        type: "string"
+        description: "This can change but not the key"
+    example:
+      name: "name"
+      id: "id"
+  ErrorModel:
+    required:
+    - "code"
+    - "message"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
