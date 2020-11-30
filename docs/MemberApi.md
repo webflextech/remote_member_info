@@ -1,6 +1,6 @@
 # RemoteMemberInfo::MemberApi
 
-All URIs are relative to *https://localhost*
+All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -19,7 +19,7 @@ require 'remote_member_info'
 
 api_instance = RemoteMemberInfo::MemberApi.new
 
-id = "id_example" # String | 
+id = 'id_example' # String | 
 
 
 begin
